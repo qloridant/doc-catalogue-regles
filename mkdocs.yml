@@ -1,12 +1,12 @@
 site_name: Registre des Algorithmes Réglementaires
 site_description: >-
-  Documentation officielle pour packager, publier et rendre interopérables
+  Documentation  pour packager, publier et rendre interopérables
   des algorithmes réglementaires sur PyPI.
 site_author: Registre Public
-site_url: https://your-org.github.io/algo-registry-docs/
+site_url: https://qloridant.github.io/doc-catalogue-regles/
 
-repo_name: your-org/algo-registry-docs
-repo_url: https://github.com/your-org/algo-registry-docs
+repo_name: qloridant/doc-catalogue-regles
+repo_url: https://github.com/qloridant/doc-catalogue-regles
 edit_uri: edit/main/docs/
 
 theme:
@@ -111,6 +111,6 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/your-org/algo-registry-docs
+      link: https://github.com/your-org/doc-catalogue-regles
   version:
     provider: mike
