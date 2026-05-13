@@ -6,11 +6,11 @@
 
 ## Pourquoi ce registre ?
 
-Les algorithmes réglementaires — calculs prudentiels, scoring de conformité, formules normatives — sont aujourd'hui dispersés dans des silos applicatifs, réimplémentés à l'identique dans chaque organisation, et impossibles à auditer de manière transversale.
+Les algorithmes réglementaires — éligibilité à un droit, calculs prudentiels, scoring de conformité, formules normatives — sont aujourd'hui dispersés dans des silos applicatifs, réimplémentés à l'identique dans chaque organisation, et impossibles à auditer de manière transversale.
 
 Ce standard de packaging s'appuie sur les **Core Vocabularies SEMIC** pour décrire sémantiquement les algorithmes réglementaires comme des `cpsv:PublicService` producteurs de `cpsv:Output`, encadrés par des `cv:LegalResource`, et fournis par des `cv:PublicOrganisation`.
 
-Résultat : des packages PyPI qui sont à la fois **installables** et **compréhensibles par les machines**.
+Résultat : des packages Python qui sont à la fois **installables** et **compréhensibles par les machines**.
 
 | Propriété | Ce que ça signifie concrètement |
 |---|---|
@@ -30,13 +30,13 @@ Les métadonnées de chaque algorithme sont exprimées dans le vocabulaire **CPS
 @prefix cv:   <http://data.europa.eu/m8g/> .
 @prefix dct:  <http://purl.org/dc/terms/> .
 
-<https://registre-algo.gouv.fr/algo/finance/lcr/v1>
+<https://registre-algo.gouv.fr/algo/civique/droit-vote/v1>
     a cpsv:PublicService ;
-    dct:title               "Liquidity Coverage Ratio — CRR2 Art. 412"@fr ;
-    cv:hasCompetentAuthority <https://data.europa.eu/esco/EBA> ;
-    cv:hasLegalResource     <http://data.europa.eu/eli/reg/2013/575/oj> ;
-    cpsv:produces           <https://registre-algo.gouv.fr/output/lcr-ratio> ;
-    owl:sameAs              <https://registre-algo.gouv.fr/pypi/regalgo-finance-lcr> .
+    dct:title               "Droit de vote en France — Code électoral Art. L.2"@fr ;
+    cv:hasCompetentAuthority <https://registre-algo.gouv.fr/org/mint> ;
+    cv:hasLegalResource     <https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/> ;
+    cpsv:produces           <https://registre-algo.gouv.fr/output/peut-voter> ;
+    owl:sameAs              <https://registre-algo.gouv.fr/pypi/regalgo-civique-droit-vote> .
 ```
 
 ---
@@ -75,20 +75,46 @@ Les métadonnées de chaque algorithme sont exprimées dans le vocabulaire **CPS
 
 ## Exemple express
 
-```python
-# pip install regalgo-finance-lcr
-from regalgo_finance_lcr import LCRAlgorithm, AlgoInput
+=== "Python"
 
-algo = LCRAlgorithm()
-result = algo.compute(AlgoInput(data={
-    "hqla": 150.0,
-    "net_outflows": 100.0
-}))
+    ```python
+    # pip install regalgo-civique-droit-vote
+    from regalgo_civique_droit_vote import DroitVoteAlgorithm, AlgoInput
 
-print(result.value)              # 1.5
-print(result.regulation)        # {'text': 'CRR2', 'article': 'Art. 412', ...}
-print(result.jsonld_context())  # Contexte JSON-LD CPSV-AP complet
-```
+    algo = DroitVoteAlgorithm()
+    result = algo.compute(AlgoInput(data={
+        "nationalite_francaise": True,
+        "age": 25,
+        "capacite_civique": True,
+        "inscrit_listes_electorales": True
+    }))
+
+    print(result.value)              # True
+    print(result.regulation)        # {'text': 'Code électoral', 'article': 'Art. L.2', ...}
+    print(result.jsonld_context())  # Contexte JSON-LD CPSV-AP complet
+    ```
+
+=== "Catala"
+
+    ```catala
+    > Utilisation Code_Electoral_Français
+
+    déclaration champ d'application DroitDeVote:
+      entrée nationalite_francaise contenu booléen
+      entrée age contenu entier
+      entrée capacite_civique contenu booléen
+      entrée inscrit_listes_electorales contenu booléen
+      résultat peut_voter contenu booléen
+
+    champ d'application DroitDeVote:
+      # Art. L.2 — nationalité, Art. L.3 — majorité,
+      # Art. L.5-L.6 — capacité civique, Art. L.7 — inscription
+      définition peut_voter égal à
+        nationalite_francaise et
+        age >= 18 et
+        capacite_civique et
+        inscrit_listes_electorales
+    ```
 
 ---
 
@@ -120,7 +146,7 @@ graph TB
 
 !!! info "Convention de nommage"
     Tous les packages du registre respectent le préfixe `regalgo-<domaine>-<nom>`.
-    Exemple : `regalgo-finance-lcr`, `regalgo-sante-drc`.
+    Exemple : `regalgo-civique-droit-vote`, `regalgo-finance-nsfr`.
     Voir les [conventions de nommage](reference/naming-conventions.md).
 
 !!! note "Relation avec le vocabulaire commun DINUM"

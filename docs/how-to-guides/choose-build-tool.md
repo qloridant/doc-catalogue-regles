@@ -42,13 +42,13 @@ Ce guide vous aide à choisir entre Hatchling, Setuptools et Poetry pour package
     build-backend = "hatchling.build"
 
     [project]
-    name    = "regalgo-finance-lcr"
+    name    = "regalgo-civique-droit-vote"
     version = "1.0.0"
     requires-python = ">=3.10"
     dependencies = ["regalgo-core>=1.0,<2.0"]
 
     [tool.hatch.build.targets.wheel]
-    packages = ["src/regalgo_finance_lcr"]
+    packages = ["src/regalgo_civique_droit_vote"]
     ```
 
 === "Setuptools"
@@ -59,7 +59,7 @@ Ce guide vous aide à choisir entre Hatchling, Setuptools et Poetry pour package
     build-backend = "setuptools.backends.legacy:build"
 
     [project]
-    name    = "regalgo-finance-lcr"
+    name    = "regalgo-civique-droit-vote"
     version = "1.0.0"
 
     [tool.setuptools.packages.find]
@@ -73,10 +73,10 @@ Ce guide vous aide à choisir entre Hatchling, Setuptools et Poetry pour package
 
     ```toml
     [tool.poetry]
-    name     = "regalgo-finance-lcr"
+    name     = "regalgo-civique-droit-vote"
     version  = "1.0.0"
-    packages = [{include = "regalgo_finance_lcr", from = "src"}]
-    include  = ["src/regalgo_finance_lcr/metadata.json"]
+    packages = [{include = "regalgo_civique_droit_vote", from = "src"}]
+    include  = ["src/regalgo_civique_droit_vote/metadata.json"]
 
     [tool.poetry.dependencies]
     python      = "^3.10"

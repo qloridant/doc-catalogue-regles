@@ -41,8 +41,46 @@ theme:
     - content.tabs.link
 
 plugins:
+  - i18n:
+      docs_structure: suffix
+      languages:
+        - locale: fr
+          default: true
+          name: Français
+          build: true
+        - locale: en
+          name: English
+          build: true
+          nav_translations:
+            Accueil: Home
+            "🎓 Tutoriels": "🎓 Tutorials"
+            "Mon premier algorithme packagé": "My first packaged algorithm"
+            "Publier sur PyPI": "Publish to PyPI"
+            "Intégrer au registre public": "Integrate to the public registry"
+            "🔧 Guides pratiques": "🔧 How-to guides"
+            "Choisir son outil de build": "Choosing a build tool"
+            "Versionner selon CalVer/SemVer réglementaire": "Versioning for regulatory algorithms"
+            "Définir des interfaces interopérables": "Defining interoperable interfaces"
+            "Écrire des tests de conformité": "Writing compliance tests"
+            "Automatiser la publication (CI/CD)": "Automate publishing (CI/CD)"
+            "Gérer les dépendances entre algorithmes": "Managing algorithm dependencies"
+            "Déclarer les métadonnées réglementaires": "Declaring regulatory metadata"
+            "📐 Référence": "📐 Reference"
+            "Vocabulaire commun": "Common vocabulary"
+            "Schéma de métadonnées": "Metadata schema"
+            "Contrat d'interface (Protocol)": "Interface contract (Protocol)"
+            "Structure de package standard": "Standard package structure"
+            "Conventions de nommage": "Naming conventions"
+            "API du registre": "Registry API"
+            "💡 Concepts": "💡 Concepts"
+            "Architecture du registre": "Registry architecture"
+            "Pourquoi l'interopérabilité réglementaire": "Why regulatory interoperability"
+            "Cycle de vie d'un algorithme réglementaire": "Regulatory algorithm lifecycle"
+            "Modèle de gouvernance": "Governance model"
   - search:
-      lang: fr
+      lang:
+        - fr
+        - en
   - tags
   - mkdocstrings:
       handlers:
@@ -59,6 +97,9 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: catala
+          class: language-catala
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
@@ -109,6 +150,13 @@ nav:
     - "Modèle de gouvernance": explanation/governance.md
 
 extra:
+  alternate:
+    - name: Français
+      link: /
+      lang: fr
+    - name: English
+      link: /en/
+      lang: en
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/your-org/doc-catalogue-regles

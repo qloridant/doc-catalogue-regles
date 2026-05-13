@@ -16,32 +16,32 @@ Liste les algorithmes du registre avec filtres.
 
 | Paramètre | Type | Description |
 |---|---|---|
-| `domain` | `string` | Filtrer par domaine (`finance`, `sante`…) |
-| `regulation` | `string` | Filtrer par texte réglementaire (`CRR2`, `DORA`…) |
-| `authority` | `string` | Filtrer par autorité (`EBA`, `AMF`…) |
+| `domain` | `string` | Filtrer par domaine (`civique`, `finance`, `sante`…) |
+| `regulation` | `string` | Filtrer par texte réglementaire (`Code électoral`, `DORA`…) |
+| `authority` | `string` | Filtrer par autorité (`Ministère de l'Intérieur`, `EBA`…) |
 | `status` | `string` | `stable`, `draft`, `deprecated` |
 | `q` | `string` | Recherche plein texte |
 
 **Exemple :**
 ```bash
-curl "https://registre-algo.gouv.fr/api/v1/algos?domain=finance&regulation=CRR2"
+curl "https://registre-algo.gouv.fr/api/v1/algos?domain=civique&regulation=Code+électoral"
 ```
 
 **Réponse :**
 ```json
 {
-  "total": 3,
+  "total": 1,
   "items": [
     {
-      "algo_id":     "finance.lcr.v1",
-      "title":       "Liquidity Coverage Ratio",
-      "pypi":        "regalgo-finance-lcr",
+      "algo_id":     "civique.droit-vote.v1",
+      "title":       "Droit de vote en France",
+      "pypi":        "regalgo-civique-droit-vote",
       "version":     "1.0.0",
-      "domain":      "finance",
-      "regulation":  {"text": "CRR2", "article": "Art. 412", "eli": "..."},
-      "authority":   "EBA",
+      "domain":      "civique",
+      "regulation":  {"text": "Code électoral", "article": "Art. L.2, L.5, L.6, L.7"},
+      "authority":   "Ministère de l'Intérieur",
       "status":      "stable",
-      "registry_uri": "https://registre-algo.gouv.fr/algo/finance/lcr/v1"
+      "registry_uri": "https://registre-algo.gouv.fr/algo/civique/droit-vote/v1"
     }
   ]
 }
@@ -54,7 +54,7 @@ curl "https://registre-algo.gouv.fr/api/v1/algos?domain=finance&regulation=CRR2"
 Retourne le `metadata.json` complet d'un algorithme en JSON-LD.
 
 ```bash
-curl "https://registre-algo.gouv.fr/api/v1/algos/finance.lcr.v1"
+curl "https://registre-algo.gouv.fr/api/v1/algos/civique.droit-vote.v1"
 # Content-Type: application/ld+json
 ```
 
@@ -74,7 +74,7 @@ Permet des requêtes sémantiques sur le graphe complet du registre.
 
 ### Exemples de requêtes
 
-**Tous les algorithmes finance encadrés par l'EBA :**
+**Tous les algorithmes civiques encadrés par le Ministère de l'Intérieur :**
 
 ```sparql
 PREFIX cpsv:    <http://purl.org/vocab/cpsv#>
@@ -87,11 +87,11 @@ WHERE {
   ?algo  a cpsv:PublicService ;
          dct:title    ?title ;
          regalgo:pypiPackage ?pypi ;
-         cv:hasCompetentAuthority <https://registre-algo.gouv.fr/org/eba> .
+         cv:hasCompetentAuthority <https://registre-algo.gouv.fr/org/mint> .
 }
 ```
 
-**Tous les algorithmes liés à un texte réglementaire EUR-Lex :**
+**Tous les algorithmes liés à un texte Légifrance :**
 
 ```sparql
 PREFIX cv:   <http://data.europa.eu/m8g/>
@@ -102,7 +102,7 @@ SELECT ?algo ?title
 WHERE {
   ?algo  dct:title ?title ;
          cv:hasLegalResource ?lr .
-  ?lr    owl:sameAs <http://data.europa.eu/eli/reg/2013/575/oj> .
+  ?lr    owl:sameAs <https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/> .
 }
 ```
 
@@ -128,13 +128,13 @@ from regalgo_core.registry import RegistryClient
 client = RegistryClient("https://registre-algo.gouv.fr/api/v1")
 
 # Recherche
-results = client.search(domain="finance", regulation="CRR2")
+results = client.search(domain="civique", regulation="Code électoral")
 for algo in results:
     print(f"{algo.algo_id} → pip install {algo.pypi_package}")
 
 # Installation automatique
-client.install("finance.lcr.v1")
-# équivalent à : pip install regalgo-finance-lcr==1.0.0
+client.install("civique.droit-vote.v1")
+# équivalent à : pip install regalgo-civique-droit-vote==1.0.0
 ```
 
 ---

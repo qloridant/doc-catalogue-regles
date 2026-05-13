@@ -20,19 +20,19 @@ Chaque package du registre embarque un fichier `metadata.json` à la racine du m
   },
 
   "@type": ["cpsv:PublicService", "regalgo:RegulatoryAlgorithm"],
-  "@id": "https://registre-algo.gouv.fr/algo/finance/lcr/v1",
+  "@id": "https://registre-algo.gouv.fr/algo/civique/droit-vote/v1",
 
-  "dct:identifier":   "finance.lcr.v1",
-  "dct:title":        {"@value": "Liquidity Coverage Ratio", "@language": "fr"},
+  "dct:identifier":   "civique.droit-vote.v1",
+  "dct:title":        {"@value": "Droit de vote en France", "@language": "fr"},
   "dct:description":  {
-    "@value": "Calcul du ratio de couverture des besoins de liquidité selon CRR2 Art. 412.",
+    "@value": "Détermine si une personne a le droit de voter en France selon le Code électoral Art. L.2 à L.7.",
     "@language": "fr"
   },
   "dct:language": {
     "@id": "http://publications.europa.eu/resource/authority/language/FRA"
   },
 
-  "regalgo:pypiPackage":       "regalgo-finance-lcr",
+  "regalgo:pypiPackage":           "regalgo-civique-droit-vote",
   "regalgo:registrySchemaVersion": "1.0",
 
   "owl:versionInfo": "1.0.0",
@@ -42,62 +42,72 @@ Chaque package du registre embarque un fichier `metadata.json` à la racine du m
   },
 
   "dct:subject": {
-    "@id": "https://registre-algo.gouv.fr/thesaurus/domaine/finance"
+    "@id": "https://registre-algo.gouv.fr/thesaurus/domaine/civique"
   },
 
   "cv:hasCompetentAuthority": {
     "@type": "cv:PublicOrganisation",
-    "@id": "https://registre-algo.gouv.fr/org/eba",
-    "dct:title": "European Banking Authority",
+    "@id": "https://registre-algo.gouv.fr/org/mint",
+    "dct:title": "Ministère de l'Intérieur",
     "owl:sameAs": {
-      "@id": "http://publications.europa.eu/resource/authority/corporate-body/EBA"
+      "@id": "http://publications.europa.eu/resource/authority/corporate-body/MINT"
     }
   },
 
   "cv:hasLegalResource": {
     "@type": "cv:LegalResource",
-    "@id": "https://registre-algo.gouv.fr/legal/crr2-art412",
-    "dct:title": {"@value": "CRR2 — Article 412 — Exigences de liquidité", "@language": "fr"},
-    "eli:id_local": "CRR2/Art.412",
-    "owl:sameAs": {"@id": "http://data.europa.eu/eli/reg/2013/575/oj"}
+    "@id": "https://registre-algo.gouv.fr/legal/code-electoral-l2",
+    "dct:title": {"@value": "Code électoral — Articles L.2, L.5, L.6, L.7 — Conditions du droit de vote", "@language": "fr"},
+    "eli:id_local": "CodeElectoral/Art.L2",
+    "owl:sameAs": {"@id": "https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/"}
   },
 
   "cpsv:hasInput": [
     {
       "@type": ["cv:Evidence", "regalgo:AlgorithmInput"],
-      "dct:identifier": "hqla",
-      "dct:type":       {"@value": "float"},
-      "cv:value":       {"@value": "EUR"},
-      "dct:description": {"@value": "High Quality Liquid Assets", "@language": "fr"}
+      "dct:identifier": "nationalite_francaise",
+      "dct:type":       {"@value": "bool"},
+      "dct:description": {"@value": "Possède la nationalité française (Art. L.2)", "@language": "fr"}
     },
     {
       "@type": ["cv:Evidence", "regalgo:AlgorithmInput"],
-      "dct:identifier": "net_outflows",
-      "dct:type":       {"@value": "float"},
-      "cv:value":       {"@value": "EUR"},
-      "dct:description": {"@value": "Sorties nettes de trésorerie sur 30 jours", "@language": "fr"}
+      "dct:identifier": "age",
+      "dct:type":       {"@value": "int"},
+      "cv:value":       {"@value": "années"},
+      "dct:description": {"@value": "Âge de la personne en années", "@language": "fr"}
+    },
+    {
+      "@type": ["cv:Evidence", "regalgo:AlgorithmInput"],
+      "dct:identifier": "capacite_civique",
+      "dct:type":       {"@value": "bool"},
+      "dct:description": {"@value": "Non privé de ses droits civiques (Art. L.5, L.6)", "@language": "fr"}
+    },
+    {
+      "@type": ["cv:Evidence", "regalgo:AlgorithmInput"],
+      "dct:identifier": "inscrit_listes_electorales",
+      "dct:type":       {"@value": "bool"},
+      "dct:description": {"@value": "Inscrit sur les listes électorales (Art. L.7)", "@language": "fr"}
     }
   ],
 
   "cpsv:produces": {
     "@type": "cpsv:Output",
-    "@id":   "https://registre-algo.gouv.fr/output/lcr-ratio",
-    "dct:identifier": "lcr_ratio",
-    "dct:type":       {"@value": "float"},
-    "cv:value":       {"@value": "ratio"},
+    "@id":   "https://registre-algo.gouv.fr/output/peut-voter",
+    "dct:identifier": "peut_voter",
+    "dct:type":       {"@value": "bool"},
     "dct:description": {
-      "@value": "Ratio LCR : HQLA / sorties nettes. Seuil réglementaire : >= 1.0",
+      "@value": "Vrai si la personne remplit les quatre conditions cumulatives du droit de vote",
       "@language": "fr"
     }
   },
 
   "owl:sameAs": [
-    {"@id": "https://pypi.org/project/regalgo-finance-lcr/"},
-    {"@id": "https://github.com/your-org/regalgo-finance-lcr"}
+    {"@id": "https://pypi.org/project/regalgo-civique-droit-vote/"},
+    {"@id": "https://github.com/your-org/regalgo-civique-droit-vote"}
   ],
 
   "skos:broader": {
-    "@id": "https://registre-algo.gouv.fr/algo/finance/liquidite"
+    "@id": "https://registre-algo.gouv.fr/algo/civique/eligibilite"
   },
 
   "dct:replaces": null,
@@ -127,12 +137,12 @@ Chaque package du registre embarque un fichier `metadata.json` à la racine du m
 | `dct:title` | **Obligatoire** | `@language` : `fr` ou `en` |
 | `regalgo:pypiPackage` | **Obligatoire** | Doit correspondre au nom PyPI exact |
 | `owl:versionInfo` | **Obligatoire** | SemVer `MAJOR.MINOR.PATCH` |
-| `cv:hasLegalResource` | **Obligatoire** | Avec `eli:id_local` ou `owl:sameAs` EUR-Lex |
+| `cv:hasLegalResource` | **Obligatoire** | Avec `eli:id_local` ou `owl:sameAs` Légifrance/EUR-Lex |
 | `cv:hasCompetentAuthority` | **Obligatoire** | |
 | `cpsv:hasInput` | **Obligatoire** | Au moins un élément |
 | `cpsv:produces` | **Obligatoire** | Un seul output principal |
 | `dct:description` | Recommandé | |
-| `owl:sameAs` (EUR-Lex) | Recommandé | Améliore l'interopérabilité |
+| `owl:sameAs` (Légifrance/EUR-Lex) | Recommandé | Améliore l'interopérabilité |
 | `dct:valid` | Recommandé | Période de validité réglementaire |
 | `regalgo:changelog` | Recommandé | Traçabilité des évolutions |
 | `dct:replaces` | Recommandé si applicable | Référence la version précédente |
@@ -147,13 +157,13 @@ from pathlib import Path
 from importlib.resources import files
 
 # Depuis le package installé
-metadata_path = files("regalgo_finance_lcr").joinpath("metadata.json")
+metadata_path = files("regalgo_civique_droit_vote").joinpath("metadata.json")
 metadata = json.loads(metadata_path.read_text())
 
 # Accès typé
-algo_id      = metadata["dct:identifier"]       # "finance.lcr.v1"
-legal_ref    = metadata["cv:hasLegalResource"]["eli:id_local"]  # "CRR2/Art.412"
-pypi_package = metadata["regalgo:pypiPackage"]  # "regalgo-finance-lcr"
+algo_id      = metadata["dct:identifier"]       # "civique.droit-vote.v1"
+legal_ref    = metadata["cv:hasLegalResource"]["eli:id_local"]  # "CodeElectoral/Art.L2"
+pypi_package = metadata["regalgo:pypiPackage"]  # "regalgo-civique-droit-vote"
 ```
 
 ---
@@ -168,9 +178,9 @@ regalgo-validator check-metadata path/to/metadata.json
 ```
 ✅ @context : namespaces requis présents
 ✅ @type    : cpsv:PublicService ✓
-✅ dct:identifier format valide : finance.lcr.v1
+✅ dct:identifier format valide : civique.droit-vote.v1
 ✅ cv:hasLegalResource : eli:id_local présent
-✅ cpsv:hasInput : 2 entrées déclarées
+✅ cpsv:hasInput : 4 entrées déclarées
 ✅ cpsv:produces : output déclaré
 ⚠️  owl:sameAs EUR-Lex absent (recommandé)
 ```

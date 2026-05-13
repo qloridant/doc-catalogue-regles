@@ -53,16 +53,16 @@ MAJOR.MINOR.PATCH[.NORM_DATE]
 Quand une norme est mise à jour (ex : révision d'un texte prudentiel), **ne remplacez pas** la version précédente — maintenez les deux :
 
 ```
-regalgo-finance-lcr          # LCR selon CRR2 (actuel)
-regalgo-finance-lcr-crr3     # LCR selon CRR3 (nouveau texte)
+regalgo-civique-droit-vote       # Droit de vote selon Code électoral (actuel)
+regalgo-civique-droit-vote-2026  # Droit de vote selon révision 2026 (nouveau texte)
 ```
 
 Ou via des extras dans le même package :
 
 ```toml
 [project.optional-dependencies]
-crr2 = []   # comportement par défaut
-crr3 = ["regalgo-finance-lcr-crr3-adapter>=1.0"]
+v2024 = []   # comportement par défaut
+v2026 = ["regalgo-civique-droit-vote-2026-adapter>=1.0"]
 ```
 
 ---

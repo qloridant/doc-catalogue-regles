@@ -24,7 +24,7 @@ Votre package doit satisfaire la **checklist de conformité** :
 
 ```bash
 pip install regalgo-validator
-regalgo-validator check regalgo-finance-lcr
+regalgo-validator check regalgo-civique-droit-vote
 ```
 
 ```
@@ -52,18 +52,18 @@ gh repo fork your-org/algo-registry --clone
 
 # 2. Créer une branche
 cd algo-registry
-git checkout -b add/finance-lcr
+git checkout -b add/civique-droit-vote
 
 # 3. Ajouter votre entrée dans l'index
 cat >> registry/index.yaml << 'EOF'
-- algo_id: finance.lcr.v1
-  pypi_package: regalgo-finance-lcr
+- algo_id: civique.droit-vote.v1
+  pypi_package: regalgo-civique-droit-vote
   latest_version: "1.0.0"
-  domain: finance
+  domain: civique
   regulation:
-    text: CRR2
-    article: "Art. 412"
-    authority: EBA
+    text: Code électoral
+    article: "Art. L.2, L.5, L.6, L.7"
+    authority: Ministère de l'Intérieur
   maintainer: your-org
   status: stable
 EOF
@@ -72,10 +72,10 @@ EOF
 regalgo-validator check-registry registry/index.yaml
 
 # 5. Ouvrir la PR
-git commit -am "feat(registry): add finance.lcr.v1"
-git push origin add/finance-lcr
-gh pr create --title "Add: finance.lcr.v1 (LCR CRR2)" \
-             --body "Adds LCR algorithm per CRR2 Art. 412. Package: regalgo-finance-lcr 1.0.0"
+git commit -am "feat(registry): add civique.droit-vote.v1"
+git push origin add/civique-droit-vote
+gh pr create --title "Add: civique.droit-vote.v1 (Droit de vote France)" \
+             --body "Adds droit de vote algorithm per Code électoral Art. L.2. Package: regalgo-civique-droit-vote 1.0.0"
 ```
 
 ---
@@ -97,23 +97,23 @@ Votre algorithme est référencé et découvrable :
 
 ```bash
 # Recherche dans le registre
-regalgo search --domain finance --regulation CRR2
+regalgo search --domain civique --regulation "Code électoral"
 
 # Résultat
-# finance.lcr.v1  |  regalgo-finance-lcr  |  1.0.0  |  stable
+# civique.droit-vote.v1  |  regalgo-civique-droit-vote  |  1.0.0  |  stable
 ```
 
 Et composable avec d'autres algorithmes du registre :
 
 ```python
-from regalgo_finance_lcr import LCRAlgorithm, AlgoInput
-from regalgo_finance_nsfr import NSFRAlgorithm  # autre package du registre
+from regalgo_civique_droit_vote import DroitVoteAlgorithm, AlgoInput
+from regalgo_civique_eligibilite_liste import EligibiliteListeAlgorithm  # autre package
 
-lcr = LCRAlgorithm()
-nsfr = NSFRAlgorithm()
+vote = DroitVoteAlgorithm()
+liste = EligibiliteListeAlgorithm()
 
 # Les deux respectent AlgorithmProtocol — même interface
-for algo in [lcr, nsfr]:
+for algo in [vote, liste]:
     result = algo.compute(AlgoInput(data=my_data))
     print(f"{algo.algo_id}: {result.value}")
 ```

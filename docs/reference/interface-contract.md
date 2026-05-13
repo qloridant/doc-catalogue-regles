@@ -26,7 +26,7 @@ class AlgorithmProtocol(Protocol):
         """
         Identifiant unique de l'algorithme.
         Format : '<domaine>.<nom>.<version_majeure>'
-        Exemple : 'finance.lcr.v1'
+        Exemple : 'civique.droit-vote.v1'
 
         Correspond à dct:identifier dans metadata.json.
         """
@@ -42,10 +42,9 @@ class AlgorithmProtocol(Protocol):
 
         Exemple :
         {
-            'text':      'CRR2',
-            'article':   'Art. 412',
-            'authority': 'EBA',
-            'eli':       'http://data.europa.eu/eli/reg/2013/575/oj'
+            'text':      'Code électoral',
+            'article':   'Art. L.2, L.5, L.6, L.7',
+            'authority': 'Ministère de l\'Intérieur'
         }
         """
         ...
@@ -95,13 +94,15 @@ class AlgoInput:
 ```python
 AlgoInput(
     data={
-        "hqla": 150.0,
-        "net_outflows": 100.0
+        "nationalite_francaise": True,
+        "age": 25,
+        "capacite_civique": True,
+        "inscrit_listes_electorales": True,
     },
     context={
-        "reporting_date": "2024-12-31",
-        "jurisdiction":   "FR",
-        "scenario":       "baseline"
+        "date_election": "2024-06-09",
+        "jurisdiction":  "FR",
+        "bureau_vote":   "Paris-01-001"
     }
 )
 ```
@@ -147,7 +148,7 @@ class AlgoResult:
     metadata: dict[str, Any] = field(default_factory=dict)
     """
     Métadonnées calculatoires complémentaires.
-    Exemples : compliant, threshold, unit, intermediate_values.
+    Exemples : conditions détaillées, seuils, valeurs intermédiaires.
     """
 
     def jsonld_context(self) -> dict:
@@ -192,10 +193,10 @@ from regalgo_core.exceptions import (
 from regalgo_core.exceptions import AlgoInputError
 
 def compute(self, algo_input: AlgoInput) -> AlgoResult:
-    if algo_input.data.get("net_outflows", 0) <= 0:
+    if algo_input.data.get("age", 0) < 0:
         raise AlgoInputError(
-            field="net_outflows",
-            message="Doit être strictement positif",
+            field="age",
+            message="L'âge doit être positif",
             algo_id=self.algo_id
         )
 ```
@@ -208,7 +209,7 @@ def compute(self, algo_input: AlgoInput) -> AlgoResult:
 from regalgo_core import AlgorithmProtocol
 
 # Vérification à l'exécution (duck typing)
-assert isinstance(MonAlgorithme(), AlgorithmProtocol)
+assert isinstance(DroitVoteAlgorithm(), AlgorithmProtocol)
 
 # Vérification statique (mypy / pyright)
 def run(algo: AlgorithmProtocol, data: dict) -> AlgoResult:

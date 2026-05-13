@@ -11,12 +11,12 @@ regalgo-<domaine>-<nom-court>
 | Segment | Règle | Exemples |
 |---|---|---|
 | `regalgo` | Préfixe fixe, toujours présent | — |
-| `<domaine>` | Code court du domaine réglementaire | `finance`, `sante`, `enviro`, `fiscal` |
-| `<nom-court>` | Acronyme ou nom court de l'algorithme | `lcr`, `nsfr`, `drc`, `beges` |
+| `<domaine>` | Code court du domaine réglementaire | `civique`, `finance`, `sante`, `enviro`, `fiscal` |
+| `<nom-court>` | Acronyme ou nom court de l'algorithme | `droit-vote`, `nsfr`, `drc`, `beges` |
 
 **Exemples valides :**
 ```
-regalgo-finance-lcr
+regalgo-civique-droit-vote
 regalgo-finance-nsfr
 regalgo-sante-drc
 regalgo-enviro-beges
@@ -25,9 +25,9 @@ regalgo-fiscal-is-taux-reduit
 
 **Exemples invalides :**
 ```
-lcr-calculator          ← manque le préfixe regalgo-
-regalgo_finance_lcr     ← underscores au lieu de tirets
-regalgo-LCR             ← majuscules interdites
+droit-vote-calculator       ← manque le préfixe regalgo-
+regalgo_civique_droit_vote  ← underscores au lieu de tirets
+regalgo-DroitVote           ← majuscules interdites
 ```
 
 ---
@@ -41,8 +41,8 @@ regalgo_<domaine>_<nom-court>
 ```
 
 ```
-regalgo-finance-lcr    →  regalgo_finance_lcr
-regalgo-sante-drc      →  regalgo_sante_drc
+regalgo-civique-droit-vote   →  regalgo_civique_droit_vote
+regalgo-sante-drc            →  regalgo_sante_drc
 ```
 
 ---
@@ -55,12 +55,12 @@ regalgo-sante-drc      →  regalgo_sante_drc
 
 | Segment | Règle | Exemples |
 |---|---|---|
-| `<domaine>` | Même code que le nom PyPI | `finance` |
-| `<nom-court>` | Même code que le nom PyPI | `lcr` |
+| `<domaine>` | Même code que le nom PyPI | `civique` |
+| `<nom-court>` | Même code que le nom PyPI | `droit-vote` |
 | `<version_majeure>` | `v` suivi du numéro MAJOR | `v1`, `v2` |
 
 ```
-finance.lcr.v1
+civique.droit-vote.v1
 finance.nsfr.v1
 sante.drc.v2
 ```
@@ -78,7 +78,7 @@ sante.drc.v2
 https://registre-algo.gouv.fr/algo/<domaine>/<nom-court>/<version_majeure>
 ```
 
-Exemple : `https://registre-algo.gouv.fr/algo/finance/lcr/v1`
+Exemple : `https://registre-algo.gouv.fr/algo/civique/droit-vote/v1`
 
 ---
 
@@ -86,9 +86,9 @@ Exemple : `https://registre-algo.gouv.fr/algo/finance/lcr/v1`
 
 | Élément | Convention | Exemple |
 |---|---|---|
-| Classe principale | `PascalCase` + `Algorithm` | `LCRAlgorithm` |
-| Module | `snake_case` | `regalgo_finance_lcr/algorithm.py` |
-| Tests | `test_` + nom | `test_lcr_algorithm.py` |
+| Classe principale | `PascalCase` + `Algorithm` | `DroitVoteAlgorithm` |
+| Module | `snake_case` | `regalgo_civique_droit_vote/algorithm.py` |
+| Tests | `test_` + nom | `test_droit_vote_algorithm.py` |
 
 ---
 
@@ -96,11 +96,12 @@ Exemple : `https://registre-algo.gouv.fr/algo/finance/lcr/v1`
 
 | Code | Domaine | Autorités typiques |
 |---|---|---|
+| `civique` | Droits civiques, élections, état civil | Ministère de l'Intérieur, CNIL |
+| `social` | Protection sociale | CNAV, CNAM |
 | `finance` | Prudentiel, marchés financiers | EBA, AMF, ACPR |
 | `sante` | Santé publique, pharmacovigilance | HAS, ANSM |
 | `enviro` | Environnement, ESG, GES | ADEME, DREAL |
 | `fiscal` | Fiscalité | DGFIP |
-| `social` | Protection sociale | CNAV, CNAM |
 | `urbanisme` | Urbanisme, construction | DGALN |
 | `transport` | Transports | DGITM |
 

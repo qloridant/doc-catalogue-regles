@@ -53,10 +53,10 @@ class MonAlgorithme:
 
     @property
     def regulation(self) -> dict[str, str]:
-        return {"text": "REG-XYZ", "article": "Art. 10", "authority": "Autorité"}
+        return {"text": "Code XYZ", "article": "Art. 10", "authority": "Autorité"}
 
     def compute(self, algo_input: AlgoInput) -> AlgoResult:
-        value = algo_input.data["param_a"] * 2
+        value = algo_input.data["param_a"] and algo_input.data["param_b"]
         return AlgoResult(
             value=value,
             algo_id=self.algo_id,
@@ -74,7 +74,7 @@ assert isinstance(MonAlgorithme(), AlgorithmProtocol)
 
 ### Pattern Pipeline
 
-Enchaîner des algorithmes où la sortie de l'un est l'entrée du suivant :
+Enchaîner des algorithmes où la sortie de l'un alimente le suivant :
 
 ```python
 from regalgo_core import AlgoInput, AlgorithmProtocol
@@ -90,22 +90,24 @@ def run_pipeline(
     for algo in stages:
         result = algo.compute(AlgoInput(data=current_data))
         results.append(result)
-        # La valeur calculée devient une entrée pour le suivant
+        # Le résultat devient une entrée pour l'étape suivante
         current_data = {**current_data, algo.algo_id: result.value}
 
     return results
 ```
 
 ```python
-from regalgo_finance_lcr import LCRAlgorithm
-from regalgo_finance_nsfr import NSFRAlgorithm
+from regalgo_civique_droit_vote import DroitVoteAlgorithm
+from regalgo_civique_eligibilite_liste import EligibiliteListeAlgorithm
 
-pipeline = [LCRAlgorithm(), NSFRAlgorithm()]
+pipeline = [DroitVoteAlgorithm(), EligibiliteListeAlgorithm()]
 results = run_pipeline(pipeline, initial_data={
-    "hqla": 150.0,
-    "net_outflows": 100.0,
-    "available_stable_funding": 200.0,
-    "required_stable_funding": 180.0,
+    "nationalite_francaise": True,
+    "age": 25,
+    "capacite_civique": True,
+    "inscrit_listes_electorales": True,
+    "commune": "Paris",
+    "adresse_connue": True,
 })
 ```
 
@@ -120,7 +122,7 @@ from regalgo_core import AlgoInput, AlgorithmProtocol
 def run_parallel(
     algos: list[AlgorithmProtocol],
     data: dict,
-) -> dict[str, float]:
+) -> dict[str, bool]:
     """Exécute plusieurs algorithmes sur les mêmes données."""
     input_ = AlgoInput(data=data)
 
@@ -140,15 +142,20 @@ def run_parallel(
 
 ## Passer le contexte réglementaire
 
-Pour des besoins d'audit ou de paramétrage contextuel (date d'effet, juridiction…) :
+Pour des besoins d'audit ou de paramétrage contextuel (date d'élection, commune, bureau de vote…) :
 
 ```python
 result = algo.compute(AlgoInput(
-    data={"hqla": 150.0, "net_outflows": 100.0},
+    data={
+        "nationalite_francaise": True,
+        "age": 25,
+        "capacite_civique": True,
+        "inscrit_listes_electorales": True,
+    },
     context={
-        "reporting_date": "2024-12-31",
+        "date_election": "2024-06-09",
         "jurisdiction": "FR",
-        "scenario": "stress",
+        "commune": "Paris-1er",
     }
 ))
 ```

@@ -52,16 +52,16 @@ python -m build
 
 # Vérification du contenu
 ls -lh dist/
-# regalgo_finance_lcr-1.0.0-py3-none-any.whl   (wheel binaire)
-# regalgo_finance_lcr-1.0.0.tar.gz              (source distribution)
+# regalgo_civique_droit_vote-1.0.0-py3-none-any.whl   (wheel binaire)
+# regalgo_civique_droit_vote-1.0.0.tar.gz              (source distribution)
 ```
 
 !!! tip "Vérifier le wheel avant publication"
     ```bash
     pip install twine
     twine check dist/*
-    # PASSED regalgo_finance_lcr-1.0.0-py3-none-any.whl
-    # PASSED regalgo_finance_lcr-1.0.0.tar.gz
+    # PASSED regalgo_civique_droit_vote-1.0.0-py3-none-any.whl
+    # PASSED regalgo_civique_droit_vote-1.0.0.tar.gz
     ```
 
 ---
@@ -74,9 +74,9 @@ twine upload --repository testpypi dist/*
 
 Vérifiez la publication :
 ```bash
-pip install --index-url https://test.pypi.org/simple/ regalgo-finance-lcr
-python -c "from regalgo_finance_lcr import LCRAlgorithm; print(LCRAlgorithm().algo_id)"
-# finance.lcr.v1
+pip install --index-url https://test.pypi.org/simple/ regalgo-civique-droit-vote
+python -c "from regalgo_civique_droit_vote import DroitVoteAlgorithm; print(DroitVoteAlgorithm().algo_id)"
+# civique.droit-vote.v1
 ```
 
 ---
@@ -92,14 +92,14 @@ twine upload dist/*
 Votre package est maintenant installable par n'importe qui :
 
 ```bash
-pip install regalgo-finance-lcr
+pip install regalgo-civique-droit-vote
 ```
 
 ---
 
 ## 6. Vérifier la page PyPI
 
-Rendez-vous sur `https://pypi.org/project/regalgo-finance-lcr/` et vérifiez que :
+Rendez-vous sur `https://pypi.org/project/regalgo-civique-droit-vote/` et vérifiez que :
 
 - [ ] La description README s'affiche correctement (Markdown rendu)
 - [ ] Les classifiers sont présents

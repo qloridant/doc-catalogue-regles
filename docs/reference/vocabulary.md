@@ -67,11 +67,11 @@ Sous-classe de `cpsv:PublicService`. Tout algorithme enregistré dans le registr
 Chaque algorithme doit référencer son texte réglementaire via le namespace **ELI** (European Legislation Identifier) :
 
 ```turtle
-<https://registre-algo.gouv.fr/legal/crr2-art412>
+<https://registre-algo.gouv.fr/legal/code-electoral-l2>
     a cv:LegalResource ;
-    dct:title    "CRR2 — Article 412 — Exigences de liquidité"@fr ;
-    eli:id_local "CRR2/Art.412" ;
-    owl:sameAs   <http://data.europa.eu/eli/reg/2013/575/oj> .
+    dct:title    "Code électoral — Articles L.2 à L.7 — Conditions du droit de vote"@fr ;
+    eli:id_local "CodeElectoral/Art.L2" ;
+    owl:sameAs   <https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/> .
 ```
 
 ---
@@ -114,6 +114,8 @@ Les domaines sont des `skos:Concept` issus du thésaurus réglementaire du regis
 
 | Concept | URI |
 |---|---|
+| Droits civiques / élections | `https://registre-algo.gouv.fr/thesaurus/domaine/civique` |
+| Protection sociale | `https://registre-algo.gouv.fr/thesaurus/domaine/social` |
 | Finance / prudentiel | `https://registre-algo.gouv.fr/thesaurus/domaine/finance` |
 | Santé publique | `https://registre-algo.gouv.fr/thesaurus/domaine/sante` |
 | Environnement / ESG | `https://registre-algo.gouv.fr/thesaurus/domaine/environnement` |

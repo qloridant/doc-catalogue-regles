@@ -53,7 +53,7 @@ import warnings
 def compute(self, algo_input: AlgoInput) -> AlgoResult:
     warnings.warn(
         f"{self.algo_id} est déprécié. "
-        f"Migrer vers finance.lcr.v2 (regalgo-finance-lcr>=2.0).",
+        f"Migrer vers civique.droit-vote.v2 (regalgo-civique-droit-vote>=2.0).",
         DeprecationWarning,
         stacklevel=2
     )

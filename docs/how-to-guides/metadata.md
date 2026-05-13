@@ -85,14 +85,14 @@ Si votre algorithme remplace une version précédente :
 
 ```json
 "dct:replaces": {
-  "@id": "https://registre-algo.gouv.fr/algo/finance/lcr/v1"
+  "@id": "https://registre-algo.gouv.fr/algo/civique/droit-vote/v1"
 }
 ```
 
 Et dans l'ancienne version, déclarez la dépréciation :
 ```json
 "regalgo:status":     "deprecated",
-"dct:isReplacedBy": {"@id": "https://registre-algo.gouv.fr/algo/finance/lcr/v2"}
+"dct:isReplacedBy": {"@id": "https://registre-algo.gouv.fr/algo/civique/droit-vote/v2"}
 ```
 
 ---

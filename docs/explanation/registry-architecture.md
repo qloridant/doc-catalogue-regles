@@ -11,7 +11,7 @@ Le registre est composé de trois couches indépendantes mais interopérables :
 ```mermaid
 graph TB
     subgraph "Couche 1 — Packaging"
-        A[Package PyPI<br/>regalgo-finance-lcr]
+        A[Package PyPI<br/>regalgo-civique-droit-vote]
         B[metadata.json-ld<br/>CPSV-AP]
         A --> B
     end

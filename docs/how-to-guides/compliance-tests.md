@@ -19,34 +19,44 @@ Les tests de conformité vérifient que l'algorithme produit les résultats atte
 ```python
 # tests/test_contract.py
 from regalgo_core import AlgorithmProtocol, AlgoInput
-from regalgo_finance_lcr import LCRAlgorithm
+from regalgo_civique_droit_vote import DroitVoteAlgorithm
 
 def test_implements_protocol():
-    assert isinstance(LCRAlgorithm(), AlgorithmProtocol)
+    assert isinstance(DroitVoteAlgorithm(), AlgorithmProtocol)
 
 def test_algo_id_format():
-    algo = LCRAlgorithm()
+    algo = DroitVoteAlgorithm()
     parts = algo.algo_id.split(".")
     assert len(parts) == 3, "Format attendu : domaine.nom.vX"
     assert parts[2].startswith("v"), "La version doit commencer par 'v'"
 
 def test_regulation_required_keys():
-    algo = LCRAlgorithm()
+    algo = DroitVoteAlgorithm()
     reg = algo.regulation
     assert "text" in reg
     assert "article" in reg
     assert "authority" in reg
 
 def test_result_has_inputs_snapshot():
-    algo = LCRAlgorithm()
-    data = {"hqla": 100.0, "net_outflows": 80.0}
+    algo = DroitVoteAlgorithm()
+    data = {
+        "nationalite_francaise": True,
+        "age": 25,
+        "capacite_civique": True,
+        "inscrit_listes_electorales": True,
+    }
     result = algo.compute(AlgoInput(data=data))
     assert result.inputs_snapshot == data
 
 def test_result_jsonld_serializable():
     import json
-    algo = LCRAlgorithm()
-    result = algo.compute(AlgoInput(data={"hqla": 100.0, "net_outflows": 80.0}))
+    algo = DroitVoteAlgorithm()
+    result = algo.compute(AlgoInput(data={
+        "nationalite_francaise": True,
+        "age": 25,
+        "capacite_civique": True,
+        "inscrit_listes_electorales": True,
+    }))
     # Ne doit pas lever d'exception
     json.dumps(result.jsonld_context())
 ```
@@ -63,7 +73,7 @@ from importlib.resources import files
 
 @pytest.fixture
 def metadata():
-    path = files("regalgo_finance_lcr").joinpath("metadata.json")
+    path = files("regalgo_civique_droit_vote").joinpath("metadata.json")
     return json.loads(path.read_text())
 
 def test_context_has_required_namespaces(metadata):
@@ -100,44 +110,84 @@ def test_inputs_declared(metadata):
 
 ## Tests réglementaires (exemples normatifs)
 
-La valeur la plus importante : vérifier avec les **cas d'usage officiels** publiés par l'autorité réglementaire (EBA Q&A, notes ESMA, circulaires HAS…).
+La valeur la plus importante : vérifier avec les **cas d'usage officiels** publiés par l'autorité réglementaire (circulaires, notes ministérielles, jurisprudence…).
 
 ```python
 # tests/test_compliance.py
 import pytest
-from regalgo_finance_lcr import LCRAlgorithm, AlgoInput
+from regalgo_civique_droit_vote import DroitVoteAlgorithm, AlgoInput
 
 
-# Cas d'usage publié par EBA — CRR2 Art. 412 Annex XXV
-# Source : EBA/GL/2015/24 — Exemple illustratif §3.2
-EBA_REFERENCE_CASES = [
+# Cas d'usage définis par le Code électoral (Art. L.2 à L.7)
+CODE_ELECTORAL_REFERENCE_CASES = [
     {
-        "description": "Établissement conforme — ratio 1.5",
-        "input":       {"hqla": 150_000_000, "net_outflows": 100_000_000},
-        "expected_value":     1.5,
-        "expected_compliant": True,
+        "description": "Citoyen français majeur inscrit — peut voter",
+        "input": {
+            "nationalite_francaise": True,
+            "age": 30,
+            "capacite_civique": True,
+            "inscrit_listes_electorales": True,
+        },
+        "expected": True,
     },
     {
-        "description": "Établissement non conforme — ratio 0.8",
-        "input":       {"hqla": 80_000_000, "net_outflows": 100_000_000},
-        "expected_value":     0.8,
-        "expected_compliant": False,
+        "description": "Mineur (17 ans) — ne peut pas voter (Art. L.3)",
+        "input": {
+            "nationalite_francaise": True,
+            "age": 17,
+            "capacite_civique": True,
+            "inscrit_listes_electorales": True,
+        },
+        "expected": False,
     },
     {
-        "description": "Seuil exact 100% — limite réglementaire",
-        "input":       {"hqla": 100_000_000, "net_outflows": 100_000_000},
-        "expected_value":     1.0,
-        "expected_compliant": True,
+        "description": "Étranger non naturalisé — ne peut pas voter (Art. L.2)",
+        "input": {
+            "nationalite_francaise": False,
+            "age": 35,
+            "capacite_civique": True,
+            "inscrit_listes_electorales": True,
+        },
+        "expected": False,
+    },
+    {
+        "description": "Non inscrit sur les listes — ne peut pas voter (Art. L.7)",
+        "input": {
+            "nationalite_francaise": True,
+            "age": 25,
+            "capacite_civique": True,
+            "inscrit_listes_electorales": False,
+        },
+        "expected": False,
+    },
+    {
+        "description": "Privé de droits civiques — ne peut pas voter (Art. L.5)",
+        "input": {
+            "nationalite_francaise": True,
+            "age": 40,
+            "capacite_civique": False,
+            "inscrit_listes_electorales": True,
+        },
+        "expected": False,
+    },
+    {
+        "description": "Exactement 18 ans — peut voter (seuil légal)",
+        "input": {
+            "nationalite_francaise": True,
+            "age": 18,
+            "capacite_civique": True,
+            "inscrit_listes_electorales": True,
+        },
+        "expected": True,
     },
 ]
 
-@pytest.mark.parametrize("case", EBA_REFERENCE_CASES, ids=lambda c: c["description"])
-def test_eba_reference_cases(case):
-    algo = LCRAlgorithm()
+@pytest.mark.parametrize("case", CODE_ELECTORAL_REFERENCE_CASES, ids=lambda c: c["description"])
+def test_code_electoral_reference_cases(case):
+    algo = DroitVoteAlgorithm()
     result = algo.compute(AlgoInput(data=case["input"]))
-    assert result.value == pytest.approx(case["expected_value"], rel=1e-6), \
-        f"Valeur attendue : {case['expected_value']}, obtenue : {result.value}"
-    assert result.metadata["compliant"] == case["expected_compliant"]
+    assert result.value == case["expected"], \
+        f"Résultat attendu : {case['expected']}, obtenu : {result.value}"
 ```
 
 ---
