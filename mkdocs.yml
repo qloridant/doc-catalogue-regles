@@ -1,0 +1,116 @@
+site_name: Registre des Algorithmes Réglementaires
+site_description: >-
+  Documentation officielle pour packager, publier et rendre interopérables
+  des algorithmes réglementaires sur PyPI.
+site_author: Registre Public
+site_url: https://your-org.github.io/algo-registry-docs/
+
+repo_name: your-org/algo-registry-docs
+repo_url: https://github.com/your-org/algo-registry-docs
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: fr
+  logo: assets/logo.png
+  favicon: assets/favicon.png
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Passer en mode sombre
+    - scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Passer en mode clair
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
+
+plugins:
+  - search:
+      lang: fr
+  - tags
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+            heading_level: 3
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Accueil: index.md
+  - "🎓 Tutoriels":
+    - tutorials/index.md
+    - "Mon premier algorithme packagé": tutorials/01-first-package.md
+    - "Publier sur PyPI": tutorials/02-publish-pypi.md
+    - "Intégrer au registre public": tutorials/03-register-algo.md
+  - "🔧 Guides pratiques":
+    - how-to-guides/index.md
+    - "Choisir son outil de build": how-to-guides/choose-build-tool.md
+    - "Versionner selon CalVer/SemVer réglementaire": how-to-guides/versioning.md
+    - "Définir des interfaces interopérables": how-to-guides/interoperability.md
+    - "Écrire des tests de conformité": how-to-guides/compliance-tests.md
+    - "Automatiser la publication (CI/CD)": how-to-guides/cicd.md
+    - "Gérer les dépendances entre algorithmes": how-to-guides/dependencies.md
+    - "Déclarer les métadonnées réglementaires": how-to-guides/metadata.md
+  - "📐 Référence":
+    - reference/index.md
+    - "Vocabulaire commun": reference/vocabulary.md
+    - "Schéma de métadonnées": reference/metadata-schema.md
+    - "Contrat d'interface (Protocol)": reference/interface-contract.md
+    - "Structure de package standard": reference/package-structure.md
+    - "Conventions de nommage": reference/naming-conventions.md
+    - "API du registre": reference/registry-api.md
+  - "💡 Concepts":
+    - explanation/index.md
+    - "Architecture du registre": explanation/registry-architecture.md
+    - "Pourquoi l'interopérabilité réglementaire": explanation/why-interoperability.md
+    - "Cycle de vie d'un algorithme réglementaire": explanation/algo-lifecycle.md
+    - "Modèle de gouvernance": explanation/governance.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/your-org/algo-registry-docs
+  version:
+    provider: mike

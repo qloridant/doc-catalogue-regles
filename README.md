@@ -1,6 +1,6 @@
 # Registre des Algorithmes Réglementaires — Documentation
 
-Documentation officielle pour packager, publier et rendre interopérables des algorithmes réglementaires sur PyPI.
+Documentation  pour packager, publier et rendre interopérables des algorithmes réglementaires sur PyPI.
 
 **Format :** [Diátaxis](https://diataxis.fr/) | **Thème :** [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) | **Déployé sur :** GitHub Pages
 
@@ -58,4 +58,3 @@ La documentation est déployée automatiquement à chaque merge.
 - [SEMIC — Core Vocabularies EU](https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic)
 - [CPSV-AP Specification](https://semiceu.github.io/CPSV-AP/)
 - [ELI — European Legislation Identifier](https://eur-lex.europa.eu/eli-register/)
-# doc-catalogue-regles
