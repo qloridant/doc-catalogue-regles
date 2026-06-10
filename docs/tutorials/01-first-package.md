@@ -87,6 +87,7 @@ Votre algorithme va hériter de la classe `regalgo.PublicRule`.
 Les données entrantes respectent la classe `regalgo.AlgoInput` et les données sortantes respectent la classe `regalgo.AlgoResult`.
 Les méta-données sont automatiquement lues depuis le fichier `metadata.json`. 
 
+=== "Python"
 
     ```python
     from __future__ import annotations
