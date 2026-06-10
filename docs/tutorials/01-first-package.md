@@ -18,19 +18,21 @@ L'exemple utilisé tout au long de ce tutoriel est un algorithme fictif détermi
 - Python 3.10 ou supérieur
 - `pip` à jour : `pip install --upgrade pip`
 - Connaissance basique de la structure d'un module Python
+- Installer le package `regalgo`[https://test.pypi.org/project/regalgo/] (defini les modèles de données à utiliser)
+
 
 ---
 
 ## 1. Créer la structure du projet
 
-Créez un dossier pour votre algorithme :
+Utilisez `regalgo` pour créer votre dossier au bon format :
 
 ```bash
-mkdir regalgo-civique-droit-vote
-cd regalgo-civique-droit-vote
+regalgo init <PROJECT_NAME>
+cd <PROJECT_NAME>
 ```
 
-Créez la structure suivante :
+Vous aurez alors la structure suivante :
 
 === "Python"
 
@@ -41,19 +43,10 @@ Créez la structure suivante :
     ├── src/
     │   └── regalgo_civique_droit_vote/
     │       ├── __init__.py
-    │       ├── algorithm.py
+    │       ├── regle.py
     │       └── metadata.json
     └── tests/
-        └── test_algorithm.py
-    ```
-
-    ```bash
-    mkdir -p src/regalgo_civique_droit_vote tests
-    touch pyproject.toml README.md
-    touch src/regalgo_civique_droit_vote/__init__.py
-    touch src/regalgo_civique_droit_vote/algorithm.py
-    touch src/regalgo_civique_droit_vote/metadata.json
-    touch tests/test_algorithm.py
+        └── test_regle.py
     ```
 
 === "Catala"
@@ -67,22 +60,11 @@ Créez la structure suivante :
     ├── src/
     │   └── regalgo_civique_droit_vote/
     │       ├── __init__.py
-    │       ├── algorithm.py               # Wrapper Python → Catala
+    │       ├── regle.py               # Wrapper Python → Catala
     │       └── metadata.json
     └── tests/
-        └── test_algorithm.py
+        └── test_regle.py
     ```
-
-    ```bash
-    mkdir -p catala src/regalgo_civique_droit_vote tests
-    touch pyproject.toml README.md
-    touch catala/droit_vote.catala_fr
-    touch src/regalgo_civique_droit_vote/__init__.py
-    touch src/regalgo_civique_droit_vote/algorithm.py
-    touch src/regalgo_civique_droit_vote/metadata.json
-    touch tests/test_algorithm.py
-    ```
-
 ---
 
 ## 2. Déclarer les métadonnées réglementaires

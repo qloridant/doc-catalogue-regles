@@ -18,19 +18,20 @@ The example used throughout is an algorithm that determines whether **a person h
 - Python 3.10 or higher
 - Up-to-date `pip`: `pip install --upgrade pip`
 - Basic knowledge of Python module structure
+- Install the package `regalgo`[https://test.pypi.org/project/regalgo/] (defines the data model to use)
 
 ---
 
 ## 1. Create the project structure
 
-Create a folder for your algorithm:
+Use the tool `regalgo` to create a folder with the right files:
 
 ```bash
-mkdir regalgo-civique-droit-vote
-cd regalgo-civique-droit-vote
+regalgo init <PROJECT_NAME>
+cd <PROJECT_NAME>
 ```
 
-Create the following structure:
+You will have the following structure:
 
 === "Python"
 
