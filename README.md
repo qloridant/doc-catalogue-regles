@@ -6,7 +6,7 @@ Documentation  pour packager, publier et rendre interopérables des algorithmes 
 
 ## Accès rapide
 
-→ **[Lire la documentation](https://your-org.github.io/algo-registry-docs/)**
+→ **[Lire la documentation](https://qloridant.github.io/algo-registry-docs/)**
 
 ## Structure
 
@@ -42,7 +42,7 @@ docs/
 ## Développement local
 
 ```bash
-pip install -r requirements-docs.txt
+pip install -r requirements.txt
 mkdocs serve
 # → http://127.0.0.1:8000
 ```

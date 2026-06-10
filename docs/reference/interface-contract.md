@@ -161,7 +161,7 @@ class AlgoResult:
                 "cpsv":    "http://purl.org/vocab/cpsv#",
                 "cv":      "http://data.europa.eu/m8g/",
                 "dct":     "http://purl.org/dc/terms/",
-                "regalgo": "https://registre-algo.gouv.fr/ns#"
+                "regalgo": "https://regles.gouv.fr/ns#"
             },
             "@type":               "cpsv:Output",
             "dct:identifier":      self.algo_id,

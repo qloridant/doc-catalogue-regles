@@ -24,7 +24,7 @@ Le champ `cv:hasLegalResource` doit référencer le texte normatif via son ident
 ```json
 "cv:hasLegalResource": {
   "@type": "cv:LegalResource",
-  "@id": "https://registre-algo.gouv.fr/legal/mon-texte",
+  "@id": "https://regles.gouv.fr/legal/mon-texte",
   "dct:title": {"@value": "Titre du texte", "@language": "fr"},
   "eli:id_local": "CRR2/Art.412",
   "owl:sameAs": {"@id": "http://data.europa.eu/eli/reg/2013/575/oj"}
@@ -85,14 +85,14 @@ Si votre algorithme remplace une version précédente :
 
 ```json
 "dct:replaces": {
-  "@id": "https://registre-algo.gouv.fr/algo/civique/droit-vote/v1"
+  "@id": "https://regles.gouv.fr/algo/civique/droit-vote/v1"
 }
 ```
 
 Et dans l'ancienne version, déclarez la dépréciation :
 ```json
 "regalgo:status":     "deprecated",
-"dct:isReplacedBy": {"@id": "https://registre-algo.gouv.fr/algo/civique/droit-vote/v2"}
+"dct:isReplacedBy": {"@id": "https://regles.gouv.fr/algo/civique/droit-vote/v2"}
 ```
 
 ---

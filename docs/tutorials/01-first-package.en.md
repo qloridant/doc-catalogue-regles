@@ -72,30 +72,72 @@ Open `src/regalgo_civique_droit_vote/metadata.json`:
 
 ```json
 {
-  "registry_schema_version": "1.0",
-  "algo_id": "civique.droit-vote.v1",
-  "name": "Droit de vote en France",
-  "short_name": "DroitVote",
-  "domain": "civique",
-  "regulation": {
-    "text": "Code électoral",
-    "article": "Art. L.2, L.5, L.6, L.7",
-    "authority": "Ministère de l'Intérieur"
+  "@context": {
+    "cprmv": "https://standaarden.open-regels.nl/standards/cprmv/0.4.0/",
+    "cpsv": "http://purl.org/vocab/cpsv#",
+    "cv":   "http://data.europa.eu/m8g/",
+    "dct":  "http://purl.org/dc/terms/"
   },
-  "version": "1.0.0",
-  "effective_date": "2024-01-01",
-  "inputs": [
-    {"name": "nationalite_francaise", "type": "bool", "description": "Holds French nationality (Art. L.2)"},
-    {"name": "age", "type": "int", "unit": "years", "description": "Person's age in years"},
-    {"name": "capacite_civique", "type": "bool", "description": "Not deprived of civic rights (Art. L.5, L.6)"},
-    {"name": "inscrit_listes_electorales", "type": "bool", "description": "Registered on electoral rolls (Art. L.7)"}
+  "@id":    "https://regles.gouv.fr/algo/civique/droit-vote/v1",
+  "@type":  "cprmv:DecisionModel",
+  "dct:title":      "Droit de vote en France",
+  "dct:identifier": "civique.droit-vote.v1",
+  "dct:version":    "1.0.0",
+  "cprmv:isBasedOn": {
+    "@id":          "https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/",
+    "dct:title":    "Code électoral",
+    "dct:coverage": "Art. L.2, L.5, L.6, L.7"
+  },
+  "cv:hasCompetentAuthority": {
+    "dct:title": "Ministère de l'Intérieur"
+  },
+  "cprmv:method":    ["cprmv:FormalisationMethod", "cprmv:CodificationMethod"],
+  "cprmv:validFrom": "2024-01-01",
+  "cprmv:hasPart": [
+    {
+      "@type":             "cprmv:Rule",
+      "dct:identifier":    "nationalite_francaise",
+      "cprmv:definition":  "Holds French nationality",
+      "cprmv:sourceQuote": "Art. L.2",
+      "type": "bool"
+    },
+    {
+      "@type":             "cprmv:Rule",
+      "dct:identifier":    "age",
+      "cprmv:definition":  "Person's age in years",
+      "cprmv:sourceQuote": "Art. L.3",
+      "type": "int",
+      "unit": "years"
+    },
+    {
+      "@type":             "cprmv:Rule",
+      "dct:identifier":    "capacite_civique",
+      "cprmv:definition":  "Not deprived of civic rights",
+      "cprmv:sourceQuote": "Art. L.5, L.6",
+      "type": "bool"
+    },
+    {
+      "@type":             "cprmv:Rule",
+      "dct:identifier":    "inscrit_listes_electorales",
+      "cprmv:definition":  "Registered on electoral rolls",
+      "cprmv:sourceQuote": "Art. L.7",
+      "type": "bool"
+    }
   ],
-  "output": {
-    "name": "peut_voter", "type": "bool", "description": "The person has the right to vote"
+  "cpsv:produces": {
+    "@type":            "cprmv:Rule",
+    "dct:identifier":   "peut_voter",
+    "cprmv:definition": "The person has the right to vote",
+    "type": "bool"
   },
-  "tags": ["election", "civique", "droit-vote", "code-electoral"]
+  "dct:subject": ["election", "civique", "droit-vote", "code-electoral"]
 }
 ```
+
+!!! note "CPRMV structure"
+    This file is a **JSON-LD** document describing a `cprmv:DecisionModel` (formalised decision model).
+    Each legal condition is a `cprmv:Rule` with a `cprmv:sourceQuote` pointing to the relevant article.
+    All keys are documented in the [metadata schema reference](../reference/metadata-schema.md).
 
 ---
 
@@ -146,11 +188,11 @@ Open `src/regalgo_civique_droit_vote/metadata.json`:
 
         @property
         def algo_id(self) -> str:
-            return self._metadata["algo_id"]
+            return self._metadata["dct:identifier"]
 
         @property
         def regulation(self) -> dict[str, str]:
-            return self._metadata["regulation"]
+            return self._metadata["cprmv:isBasedOn"]
 
         def compute(self, algo_input: AlgoInput) -> AlgoResult:
             nationalite = bool(algo_input.data["nationalite_francaise"])

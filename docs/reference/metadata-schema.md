@@ -15,12 +15,12 @@ Chaque package du registre embarque un fichier `metadata.json` à la racine du m
     "owl":     "http://www.w3.org/2002/07/owl#",
     "xsd":     "http://www.w3.org/2001/XMLSchema#",
     "eli":     "http://data.europa.eu/eli/ontology#",
-    "regalgo": "https://registre-algo.gouv.fr/ns#",
+    "regalgo": "https://regles.gouv.fr/ns#",
     "skos":    "http://www.w3.org/2004/02/skos/core#"
   },
 
   "@type": ["cpsv:PublicService", "regalgo:RegulatoryAlgorithm"],
-  "@id": "https://registre-algo.gouv.fr/algo/civique/droit-vote/v1",
+  "@id": "https://regles.gouv.fr/algo/civique/droit-vote/v1",
 
   "dct:identifier":   "civique.droit-vote.v1",
   "dct:title":        {"@value": "Droit de vote en France", "@language": "fr"},
@@ -42,12 +42,12 @@ Chaque package du registre embarque un fichier `metadata.json` à la racine du m
   },
 
   "dct:subject": {
-    "@id": "https://registre-algo.gouv.fr/thesaurus/domaine/civique"
+    "@id": "https://regles.gouv.fr/thesaurus/domaine/civique"
   },
 
   "cv:hasCompetentAuthority": {
     "@type": "cv:PublicOrganisation",
-    "@id": "https://registre-algo.gouv.fr/org/mint",
+    "@id": "https://regles.gouv.fr/org/mint",
     "dct:title": "Ministère de l'Intérieur",
     "owl:sameAs": {
       "@id": "http://publications.europa.eu/resource/authority/corporate-body/MINT"
@@ -56,7 +56,7 @@ Chaque package du registre embarque un fichier `metadata.json` à la racine du m
 
   "cv:hasLegalResource": {
     "@type": "cv:LegalResource",
-    "@id": "https://registre-algo.gouv.fr/legal/code-electoral-l2",
+    "@id": "https://regles.gouv.fr/legal/code-electoral-l2",
     "dct:title": {"@value": "Code électoral — Articles L.2, L.5, L.6, L.7 — Conditions du droit de vote", "@language": "fr"},
     "eli:id_local": "CodeElectoral/Art.L2",
     "owl:sameAs": {"@id": "https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/"}
@@ -92,7 +92,7 @@ Chaque package du registre embarque un fichier `metadata.json` à la racine du m
 
   "cpsv:produces": {
     "@type": "cpsv:Output",
-    "@id":   "https://registre-algo.gouv.fr/output/peut-voter",
+    "@id":   "https://regles.gouv.fr/output/peut-voter",
     "dct:identifier": "peut_voter",
     "dct:type":       {"@value": "bool"},
     "dct:description": {
@@ -107,7 +107,7 @@ Chaque package du registre embarque un fichier `metadata.json` à la racine du m
   ],
 
   "skos:broader": {
-    "@id": "https://registre-algo.gouv.fr/algo/civique/eligibilite"
+    "@id": "https://regles.gouv.fr/algo/civique/eligibilite"
   },
 
   "dct:replaces": null,

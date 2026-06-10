@@ -30,13 +30,13 @@ Each algorithm's metadata is expressed in the **CPSV-AP** (Core Public Service V
 @prefix cv:   <http://data.europa.eu/m8g/> .
 @prefix dct:  <http://purl.org/dc/terms/> .
 
-<https://registre-algo.gouv.fr/algo/civique/droit-vote/v1>
+<https://regles.gouv.fr/algo/civique/droit-vote/v1>
     a cpsv:PublicService ;
     dct:title               "Right to vote in France — Electoral Code Art. L.2"@en ;
-    cv:hasCompetentAuthority <https://registre-algo.gouv.fr/org/mint> ;
+    cv:hasCompetentAuthority <https://regles.gouv.fr/org/mint> ;
     cv:hasLegalResource     <https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/> ;
-    cpsv:produces           <https://registre-algo.gouv.fr/output/peut-voter> ;
-    owl:sameAs              <https://registre-algo.gouv.fr/pypi/regalgo-civique-droit-vote> .
+    cpsv:produces           <https://regles.gouv.fr/output/peut-voter> ;
+    owl:sameAs              <https://regles.gouv.fr/pypi/regalgo-civique-droit-vote> .
 ```
 
 ---

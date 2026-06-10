@@ -27,7 +27,7 @@ dependencies = [
 ```json
 "regalgo:dependsOn": [
   {
-    "@id": "https://registre-algo.gouv.fr/algo/finance/exposure/v1",
+    "@id": "https://regles.gouv.fr/algo/finance/exposure/v1",
     "regalgo:version_constraint": ">=1.2,<2.0"
   }
 ]

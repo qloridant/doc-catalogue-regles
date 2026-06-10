@@ -75,10 +75,10 @@ sante.drc.v2
 ## URI du registre
 
 ```
-https://registre-algo.gouv.fr/algo/<domaine>/<nom-court>/<version_majeure>
+https://regles.gouv.fr/algo/<domaine>/<nom-court>/<version_majeure>
 ```
 
-Exemple : `https://registre-algo.gouv.fr/algo/civique/droit-vote/v1`
+Exemple : `https://regles.gouv.fr/algo/civique/droit-vote/v1`
 
 ---
 

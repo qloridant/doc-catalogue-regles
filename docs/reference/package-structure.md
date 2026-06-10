@@ -83,7 +83,7 @@ keywords = ["regalgo", "<domaine>", "<nom-court>"]
 
 # Lien vers le registre public (obligatoire)
 [project.urls]
-"Registry" = "https://registre-algo.gouv.fr/algo/<domaine>/<nom>/<vMajeure>"
+"Registry" = "https://regles.gouv.fr/algo/<domaine>/<nom>/<vMajeure>"
 ```
 
 ---

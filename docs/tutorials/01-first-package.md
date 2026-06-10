@@ -91,33 +91,72 @@ Ouvrez `src/regalgo_civique_droit_vote/metadata.json` et renseignez :
 
 ```json
 {
-  "registry_schema_version": "1.0",
-  "algo_id": "civique.droit-vote.v1",
-  "name": "Droit de vote en France",
-  "short_name": "DroitVote",
-  "domain": "civique",
-  "regulation": {
-    "text": "Code électoral",
-    "article": "Art. L.2, L.5, L.6, L.7",
-    "authority": "Ministère de l'Intérieur"
+  "@context": {
+    "cprmv": "https://standaarden.open-regels.nl/standards/cprmv/0.4.0/",
+    "cpsv": "http://purl.org/vocab/cpsv#",
+    "cv":   "http://data.europa.eu/m8g/",
+    "dct":  "http://purl.org/dc/terms/"
   },
-  "version": "1.0.0",
-  "effective_date": "2024-01-01",
-  "inputs": [
-    {"name": "nationalite_francaise", "type": "bool", "description": "Possède la nationalité française (Art. L.2)"},
-    {"name": "age", "type": "int", "unit": "années", "description": "Âge de la personne"},
-    {"name": "capacite_civique", "type": "bool", "description": "Non privé de ses droits civiques (Art. L.5, L.6)"},
-    {"name": "inscrit_listes_electorales", "type": "bool", "description": "Inscrit sur les listes électorales (Art. L.7)"}
+  "@id":    "https://regles.gouv.fr/algo/civique/droit-vote/v1",
+  "@type":  "cprmv:DecisionModel",
+  "dct:title":      "Droit de vote en France",
+  "dct:identifier": "civique.droit-vote.v1",
+  "dct:version":    "1.0.0",
+  "cprmv:isBasedOn": {
+    "@id":          "https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/",
+    "dct:title":    "Code électoral",
+    "dct:coverage": "Art. L.2, L.5, L.6, L.7"
+  },
+  "cv:hasCompetentAuthority": {
+    "dct:title": "Ministère de l'Intérieur"
+  },
+  "cprmv:method":    ["cprmv:FormalisationMethod", "cprmv:CodificationMethod"],
+  "cprmv:validFrom": "2024-01-01",
+  "cprmv:hasPart": [
+    {
+      "@type":             "cprmv:Rule",
+      "dct:identifier":    "nationalite_francaise",
+      "cprmv:definition":  "Possède la nationalité française",
+      "cprmv:sourceQuote": "Art. L.2",
+      "type": "bool"
+    },
+    {
+      "@type":             "cprmv:Rule",
+      "dct:identifier":    "age",
+      "cprmv:definition":  "Âge de la personne en années",
+      "cprmv:sourceQuote": "Art. L.3",
+      "type": "int",
+      "unit": "années"
+    },
+    {
+      "@type":             "cprmv:Rule",
+      "dct:identifier":    "capacite_civique",
+      "cprmv:definition":  "Non privé de ses droits civiques",
+      "cprmv:sourceQuote": "Art. L.5, L.6",
+      "type": "bool"
+    },
+    {
+      "@type":             "cprmv:Rule",
+      "dct:identifier":    "inscrit_listes_electorales",
+      "cprmv:definition":  "Inscrit sur les listes électorales",
+      "cprmv:sourceQuote": "Art. L.7",
+      "type": "bool"
+    }
   ],
-  "output": {
-    "name": "peut_voter", "type": "bool", "description": "La personne a le droit de voter"
+  "cpsv:produces": {
+    "@type":            "cprmv:Rule",
+    "dct:identifier":   "peut_voter",
+    "cprmv:definition": "La personne a le droit de voter",
+    "type": "bool"
   },
-  "tags": ["election", "civique", "droit-vote", "code-electoral"]
+  "dct:subject": ["election", "civique", "droit-vote", "code-electoral"]
 }
 ```
 
-!!! note "Schéma complet"
-    Toutes les clés possibles sont documentées dans la [référence du schéma de métadonnées](../reference/metadata-schema.md).
+!!! note "Structure CPRMV"
+    Le fichier est un document **JSON-LD** décrivant un `cprmv:DecisionModel` (modèle de décision formalisé).
+    Chaque condition légale est une `cprmv:Rule` avec sa `cprmv:sourceQuote` (article de référence).
+    Toutes les clés sont documentées dans la [référence du schéma de métadonnées](../reference/metadata-schema.md).
 
 ---
 
@@ -174,11 +213,11 @@ Ouvrez `src/regalgo_civique_droit_vote/metadata.json` et renseignez :
 
         @property
         def algo_id(self) -> str:
-            return self._metadata["algo_id"]
+            return self._metadata["dct:identifier"]
 
         @property
         def regulation(self) -> dict[str, str]:
-            return self._metadata["regulation"]
+            return self._metadata["cprmv:isBasedOn"]
 
         def compute(self, algo_input: AlgoInput) -> AlgoResult:
             """
@@ -294,7 +333,7 @@ __all__ = ["DroitVoteAlgorithm", "AlgoInput", "AlgoResult"]
     ]
 
     [project.urls]
-    "Registry" = "https://registre-algo.example.com/civique/droit-vote"
+    "Registry" = "https://regles.example.com/civique/droit-vote"
     "Source" = "https://github.com/your-org/regalgo-civique-droit-vote"
 
     [tool.hatch.build.targets.wheel]
@@ -400,7 +439,7 @@ def test_age_negatif_raises():
 def test_algo_id_and_regulation():
     algo = DroitVoteAlgorithm()
     assert algo.algo_id == "civique.droit-vote.v1"
-    assert algo.regulation["text"] == "Code électoral"
+    assert algo.regulation["dct:title"] == "Code électoral"
 ```
 
 ---

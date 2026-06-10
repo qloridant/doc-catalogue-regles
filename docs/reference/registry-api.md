@@ -6,7 +6,7 @@ Le registre expose deux interfaces de découverte : une **API REST** pour les co
 
 ## API REST
 
-Base URL : `https://registre-algo.gouv.fr/api/v1`
+Base URL : `https://regles.gouv.fr/api/v1`
 
 ### `GET /algos`
 
@@ -24,7 +24,7 @@ Liste les algorithmes du registre avec filtres.
 
 **Exemple :**
 ```bash
-curl "https://registre-algo.gouv.fr/api/v1/algos?domain=civique&regulation=Code+électoral"
+curl "https://regles.gouv.fr/api/v1/algos?domain=civique&regulation=Code+électoral"
 ```
 
 **Réponse :**
@@ -41,7 +41,7 @@ curl "https://registre-algo.gouv.fr/api/v1/algos?domain=civique&regulation=Code+
       "regulation":  {"text": "Code électoral", "article": "Art. L.2, L.5, L.6, L.7"},
       "authority":   "Ministère de l'Intérieur",
       "status":      "stable",
-      "registry_uri": "https://registre-algo.gouv.fr/algo/civique/droit-vote/v1"
+      "registry_uri": "https://regles.gouv.fr/algo/civique/droit-vote/v1"
     }
   ]
 }
@@ -54,7 +54,7 @@ curl "https://registre-algo.gouv.fr/api/v1/algos?domain=civique&regulation=Code+
 Retourne le `metadata.json` complet d'un algorithme en JSON-LD.
 
 ```bash
-curl "https://registre-algo.gouv.fr/api/v1/algos/civique.droit-vote.v1"
+curl "https://regles.gouv.fr/api/v1/algos/civique.droit-vote.v1"
 # Content-Type: application/ld+json
 ```
 
@@ -68,7 +68,7 @@ Historique des versions d'un algorithme.
 
 ## Endpoint SPARQL
 
-URL : `https://registre-algo.gouv.fr/sparql`
+URL : `https://regles.gouv.fr/sparql`
 
 Permet des requêtes sémantiques sur le graphe complet du registre.
 
@@ -80,14 +80,14 @@ Permet des requêtes sémantiques sur le graphe complet du registre.
 PREFIX cpsv:    <http://purl.org/vocab/cpsv#>
 PREFIX cv:      <http://data.europa.eu/m8g/>
 PREFIX dct:     <http://purl.org/dc/terms/>
-PREFIX regalgo: <https://registre-algo.gouv.fr/ns#>
+PREFIX regalgo: <https://regles.gouv.fr/ns#>
 
 SELECT ?algo ?title ?pypi
 WHERE {
   ?algo  a cpsv:PublicService ;
          dct:title    ?title ;
          regalgo:pypiPackage ?pypi ;
-         cv:hasCompetentAuthority <https://registre-algo.gouv.fr/org/mint> .
+         cv:hasCompetentAuthority <https://regles.gouv.fr/org/mint> .
 }
 ```
 
@@ -125,7 +125,7 @@ ORDER BY ?new_algo
 ```python
 from regalgo_core.registry import RegistryClient
 
-client = RegistryClient("https://registre-algo.gouv.fr/api/v1")
+client = RegistryClient("https://regles.gouv.fr/api/v1")
 
 # Recherche
 results = client.search(domain="civique", regulation="Code électoral")

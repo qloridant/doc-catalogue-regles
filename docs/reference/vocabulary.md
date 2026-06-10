@@ -15,7 +15,7 @@ Cette page définit les termes et namespaces utilisés dans le registre des algo
 | `skos:` | `http://www.w3.org/2004/02/skos/core#` | SKOS |
 | `xsd:` | `http://www.w3.org/2001/XMLSchema#` | XML Schema |
 | `eli:` | `http://data.europa.eu/eli/ontology#` | European Legislation Identifier |
-| `regalgo:` | `https://registre-algo.gouv.fr/ns#` | Namespace propre au registre |
+| `regalgo:` | `https://regles.gouv.fr/ns#` | Namespace propre au registre |
 
 ---
 
@@ -67,7 +67,7 @@ Sous-classe de `cpsv:PublicService`. Tout algorithme enregistré dans le registr
 Chaque algorithme doit référencer son texte réglementaire via le namespace **ELI** (European Legislation Identifier) :
 
 ```turtle
-<https://registre-algo.gouv.fr/legal/code-electoral-l2>
+<https://regles.gouv.fr/legal/code-electoral-l2>
     a cv:LegalResource ;
     dct:title    "Code électoral — Articles L.2 à L.7 — Conditions du droit de vote"@fr ;
     eli:id_local "CodeElectoral/Art.L2" ;
@@ -88,7 +88,7 @@ Chaque algorithme doit référencer son texte réglementaire via le namespace **
 
 Utiliser `owl:sameAs` pour aligner avec le référentiel EU :
 ```turtle
-<https://registre-algo.gouv.fr/org/eba>
+<https://regles.gouv.fr/org/eba>
     a cv:PublicOrganisation ;
     owl:sameAs <http://publications.europa.eu/resource/authority/corporate-body/EBA> .
 ```
@@ -114,13 +114,13 @@ Les domaines sont des `skos:Concept` issus du thésaurus réglementaire du regis
 
 | Concept | URI |
 |---|---|
-| Droits civiques / élections | `https://registre-algo.gouv.fr/thesaurus/domaine/civique` |
-| Protection sociale | `https://registre-algo.gouv.fr/thesaurus/domaine/social` |
-| Finance / prudentiel | `https://registre-algo.gouv.fr/thesaurus/domaine/finance` |
-| Santé publique | `https://registre-algo.gouv.fr/thesaurus/domaine/sante` |
-| Environnement / ESG | `https://registre-algo.gouv.fr/thesaurus/domaine/environnement` |
-| Fiscalité | `https://registre-algo.gouv.fr/thesaurus/domaine/fiscalite` |
-| Urbanisme | `https://registre-algo.gouv.fr/thesaurus/domaine/urbanisme` |
+| Droits civiques / élections | `https://regles.gouv.fr/thesaurus/domaine/civique` |
+| Protection sociale | `https://regles.gouv.fr/thesaurus/domaine/social` |
+| Finance / prudentiel | `https://regles.gouv.fr/thesaurus/domaine/finance` |
+| Santé publique | `https://regles.gouv.fr/thesaurus/domaine/sante` |
+| Environnement / ESG | `https://regles.gouv.fr/thesaurus/domaine/environnement` |
+| Fiscalité | `https://regles.gouv.fr/thesaurus/domaine/fiscalite` |
+| Urbanisme | `https://regles.gouv.fr/thesaurus/domaine/urbanisme` |
 
 ---
 
