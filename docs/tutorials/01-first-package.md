@@ -1,13 +1,14 @@
 # Tutoriel 01 — Mon premier algorithme packagé
 
 **Durée estimée :** ~20 minutes  
-**Objectif :** Transformer un algorithme réglementaire en package installable, conforme au standard du registre.
+**Objectif :** Construire un algorithme réglementaire sous forme de package installable, conforme au standard du registre.
 
-À la fin de ce tutoriel, vous aurez un package qui :
+À la fin de ce tutoriel, vous aurez une implémentation de réglementation :
 
-- s'installe avec `pip install`
-- expose le contrat d'interface standard (`AlgorithmProtocol`)
-- embarque les métadonnées réglementaires minimales requises
+- inter-opérable & ré-utilisable
+- qui s'installe facilement
+- référencée dans le catalogue de règles
+- auditable
 
 L'exemple utilisé tout au long de ce tutoriel est un algorithme fictif déterminant si **une personne a le droit de voter en France** selon le Code électoral (Art. L.2 à L.7). Des implémentations en **Python** et en **Catala** sont proposées.
 
@@ -16,7 +17,6 @@ L'exemple utilisé tout au long de ce tutoriel est un algorithme fictif détermi
 ## Prérequis
 
 - Python 3.10 ou supérieur
-- `pip` à jour : `pip install --upgrade pip`
 - Connaissance basique de la structure d'un module Python
 - Installer le package [`regalgo`](https://test.pypi.org/project/regalgo/). Ce package vous aide à :
     * utiliser les modèles de données standardiser
@@ -72,71 +72,7 @@ Vous aurez alors la structure suivante :
 
 ## 2. Déclarer les métadonnées réglementaires
 
-Ouvrez `src/regalgo_civique_droit_vote/metadata.json` et renseignez :
-
-```json
-{
-  "@context": {
-    "cprmv": "https://standaarden.open-regels.nl/standards/cprmv/0.4.0/",
-    "cpsv": "http://purl.org/vocab/cpsv#",
-    "cv":   "http://data.europa.eu/m8g/",
-    "dct":  "http://purl.org/dc/terms/"
-  },
-  "@id":    "https://regles.gouv.fr/algo/civique/droit-vote/v1",
-  "@type":  "cprmv:DecisionModel",
-  "dct:title":      "Droit de vote en France",
-  "dct:identifier": "civique.droit-vote.v1",
-  "dct:version":    "1.0.0",
-  "cprmv:isBasedOn": {
-    "@id":          "https://www.legifrance.gouv.fr/codes/id/LEGITEXT000006070239/",
-    "dct:title":    "Code électoral",
-    "dct:coverage": "Art. L.2, L.5, L.6, L.7"
-  },
-  "cv:hasCompetentAuthority": {
-    "dct:title": "Ministère de l'Intérieur"
-  },
-  "cprmv:method":    ["cprmv:FormalisationMethod", "cprmv:CodificationMethod"],
-  "cprmv:validFrom": "2024-01-01",
-  "cprmv:hasPart": [
-    {
-      "@type":             "cprmv:Rule",
-      "dct:identifier":    "nationalite_francaise",
-      "cprmv:definition":  "Possède la nationalité française",
-      "cprmv:sourceQuote": "Art. L.2",
-      "type": "bool"
-    },
-    {
-      "@type":             "cprmv:Rule",
-      "dct:identifier":    "age",
-      "cprmv:definition":  "Âge de la personne en années",
-      "cprmv:sourceQuote": "Art. L.3",
-      "type": "int",
-      "unit": "années"
-    },
-    {
-      "@type":             "cprmv:Rule",
-      "dct:identifier":    "capacite_civique",
-      "cprmv:definition":  "Non privé de ses droits civiques",
-      "cprmv:sourceQuote": "Art. L.5, L.6",
-      "type": "bool"
-    },
-    {
-      "@type":             "cprmv:Rule",
-      "dct:identifier":    "inscrit_listes_electorales",
-      "cprmv:definition":  "Inscrit sur les listes électorales",
-      "cprmv:sourceQuote": "Art. L.7",
-      "type": "bool"
-    }
-  ],
-  "cpsv:produces": {
-    "@type":            "cprmv:Rule",
-    "dct:identifier":   "peut_voter",
-    "cprmv:definition": "La personne a le droit de voter",
-    "type": "bool"
-  },
-  "dct:subject": ["election", "civique", "droit-vote", "code-electoral"]
-}
-```
+Ouvrez `src/<PROOJECT_NAME>/metadata.json` et complétez les méta-données.
 
 !!! note "Structure CPRMV"
     Le fichier est un document **JSON-LD** décrivant un `cprmv:DecisionModel` (modèle de décision formalisé).
@@ -147,9 +83,10 @@ Ouvrez `src/regalgo_civique_droit_vote/metadata.json` et renseignez :
 
 ## 3. Implémenter l'algorithme
 
-=== "Python"
+Votre algorithme va hériter de la classe `regalgo.PublicRule`. 
+Les données entrantes respectent la classe `regalgo.AlgoInput` et les données sortantes respectent la classe `regalgo.AlgoResult`.
+Les méta-données sont automatiquement lues depuis le fichier `metadata.json`. 
 
-    Ouvrez `src/regalgo_civique_droit_vote/algorithm.py` :
 
     ```python
     from __future__ import annotations
@@ -158,26 +95,6 @@ Ouvrez `src/regalgo_civique_droit_vote/metadata.json` et renseignez :
     from pathlib import Path
     from dataclasses import dataclass, field
     from typing import Any
-
-
-    # --- Structures de données standard ---
-
-    @dataclass
-    class AlgoInput:
-        """Entrée normalisée d'un algorithme réglementaire."""
-        data: dict[str, Any]
-        context: dict[str, Any] = field(default_factory=dict)
-
-
-    @dataclass
-    class AlgoResult:
-        """Sortie normalisée d'un algorithme réglementaire."""
-        value: Any
-        algo_id: str
-        regulation: dict[str, str]
-        inputs_snapshot: dict[str, Any]
-        metadata: dict[str, Any] = field(default_factory=dict)
-
 
     # --- Implémentation de l'algorithme ---
 
@@ -377,7 +294,8 @@ Ouvrez `tests/test_algorithm.py` :
 
 ```python
 import pytest
-from regalgo_civique_droit_vote import DroitVoteAlgorithm, AlgoInput
+from regalgo import AlgoInput
+from regalgo_civique_droit_vote import DroitVoteAlgorithm
 
 
 ELECTEUR_VALIDE = {
