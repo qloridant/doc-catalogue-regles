@@ -8,7 +8,7 @@
 
 Les algorithmes réglementaires — éligibilité à un droit, scoring de conformité, formules normatives — sont aujourd'hui dispersés dans des silos applicatifs, réimplémentés à l'identique dans chaque organisation, et impossibles à auditer de manière transversale.
 
-Ce standard de packaging s'appuie sur **[CPRMV 0.4.0](https://standaarden.open-regels.nl/standards/cprmv/0.4.0/)** (Core Public Rule Management Vocabulary) pour décrire sémantiquement les algorithmes réglementaires comme des `cprmv:DecisionModel` — des ensembles de règles formalisées (`cprmv:RuleSet`) produits par un `cpsv:PublicService`, tracés jusqu'à leur source normative via `cprmv:isBasedOn`.
+Ce standard de packaging s'appuie sur le **[CPRMV 0.4.0](https://standaarden.open-regels.nl/standards/cprmv/0.4.0/)** (Core Public Rule Management Vocabulary) pour décrire sémantiquement les algorithmes réglementaires comme des `cprmv:DecisionModel` — des ensembles de règles formalisées (`cprmv:RuleSet`) produits par un `cpsv:PublicService`, tracés jusqu'à leur source normative via `cprmv:isBasedOn`.
 
 Résultat : des packages standardisés qui sont à la fois **installables** et **compréhensibles par les humains et les machines**.
 

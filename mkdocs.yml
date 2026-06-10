@@ -12,7 +12,6 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: fr
-  logo: assets/logo.png
   favicon: assets/favicon.png
   palette:
     - scheme: default
