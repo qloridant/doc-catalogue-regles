@@ -42,7 +42,7 @@ You will have the following structure:
     ├── src/
     │   └── regalgo_civique_droit_vote/
     │       ├── __init__.py
-    │       ├── algorithm.py
+    │       ├── regles.py
     │       └── metadata.json
     └── tests/
         └── test_algorithm.py
@@ -59,7 +59,7 @@ You will have the following structure:
     ├── src/
     │   └── regalgo_civique_droit_vote/
     │       ├── __init__.py
-    │       ├── algorithm.py           # Python wrapper → Catala
+    │       ├── regles.py           # Python wrapper → Catala
     │       └── metadata.json
     └── tests/
         └── test_algorithm.py
