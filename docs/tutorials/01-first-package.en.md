@@ -18,7 +18,7 @@ The example used throughout is an algorithm that determines whether **a person h
 - Python 3.10 or higher
 - Up-to-date `pip`: `pip install --upgrade pip`
 - Basic knowledge of Python module structure
-- Install the package `regalgo`[https://test.pypi.org/project/regalgo/] (defines the data model to use)
+- Install the package [`regalgo`](https://test.pypi.org/project/regalgo/) (defines the data model to use)
 
 ---
 

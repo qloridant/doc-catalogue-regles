@@ -18,7 +18,10 @@ L'exemple utilisé tout au long de ce tutoriel est un algorithme fictif détermi
 - Python 3.10 ou supérieur
 - `pip` à jour : `pip install --upgrade pip`
 - Connaissance basique de la structure d'un module Python
-- Installer le package `regalgo`[https://test.pypi.org/project/regalgo/] (defini les modèles de données à utiliser)
+- Installer le package [`regalgo`](https://test.pypi.org/project/regalgo/). Ce package vous aide à :
+    * utiliser les modèles de données standardiser
+    * alerter automatiquement le catalogue de règles en cas de mises à jour
+    * pré-remplir les méta-données
 
 
 ---
